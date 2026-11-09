@@ -33,12 +33,19 @@
 
     <h1>Users</h1>
 
+    @if (session('success'))
+        <p style="color: green">{{ session('success') }}</p>
+    @endif
+
+    <p><a href="{{ route('users.create') }}">Create User</a></p>
+
     <table>
         <thead>
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Full Name</th>
                 <th scope="col">Username</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -47,10 +54,13 @@
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->full_name }}</td>
                     <td>{{ $user->username }}</td>
+                    <td>
+                        <a href="{{ route('users.edit', $user) }}">Edit</a>
+                    </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="3">No users found.</td>
+                    <td colspan="4">No users found.</td>
                 </tr>
             @endforelse
         </tbody>

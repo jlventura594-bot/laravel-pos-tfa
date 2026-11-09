@@ -33,6 +33,14 @@
 
     <h1>Customers</h1>
 
+    @if (session('success'))
+        <p style="color: green">{{ session('success') }}</p>
+    @endif
+
+    <p>
+        <a href="{{ route('customers.create') }}">Create Customer</a>
+    </p>
+
     <table>
         <thead>
             <tr>
@@ -40,6 +48,7 @@
                 <th scope="col">Full Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Phone</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -49,10 +58,13 @@
                     <td>{{ $customer->full_name }}</td>
                     <td>{{ $customer->email }}</td>
                     <td>{{ $customer->phone ?? '—' }}</td>
+                    <td>
+                        <a href="{{ route('customers.edit', $customer) }}">Edit</a>
+                    </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="4">No customers found.</td>
+                    <td colspan="5">No customers found.</td>
                 </tr>
             @endforelse
         </tbody>

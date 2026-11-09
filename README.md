@@ -1,53 +1,68 @@
 # Laravel POS — Technical Formative Assessments
 
-A Laravel project for IT0049 Web System Technologies.
+A Laravel application developed for IT0049 Web System Technologies.
 
 **Developer:** John Laurence Ventura  
-**Current milestone:** TFA6 — From Arrays to Eloquent
+**Current milestone:** TFA7 — Forms and Validation (in progress)
 
 ## Features
 
-- Home page introducing the application.
-- About page describing the project.
-- Customers page displaying five sample customers.
-- Users page displaying five sample users.
-- Navigation between all four pages.
-- Blade tables rendered using `@foreach`.
+- Home and About pages.
+- Customer and user listings retrieved through Eloquent.
+- Customer creation and editing.
+- User creation and editing.
+- Server-side validation with field-level error messages.
+- Preservation of submitted non-password input after validation errors.
+- Unique username and email validation for users.
+- CSRF protection on forms.
+- Database migrations and a sample-data seeder.
 
-Customer and user records are stored in a database and retrieved through
-Eloquent models. Migrations define the schema, and PosSeeder supplies
-five sample customers and five sample users.
+New user passwords are hashed using the User model's password cast.
+Authentication and login are not implemented.
 
-Authentication and CRUD operations are not implemented in this milestone.
+## Assessment Progress
 
-## Technologies
+### TFA5 — Laravel Foundations
 
-- Laravel 13
+Implemented four pages, routes, controllers, Blade views, and navigation.
+
+### TFA6 — From Arrays to Eloquent
+
+Replaced controller arrays with database queries, added a Customer model,
+updated the users schema, and created PosSeeder with five sample records
+for each table.
+
+### TFA7 — Forms, Validation, and File Upload
+
+Implemented customer and user create/edit forms with validation.
+
+The nullable avatar database column has been added. Avatar validation,
+image preparation, storage, and listing display remain pending.
+TFA7 is not yet complete.
+
+## Requirements
+
 - PHP 8.4
 - Composer 2
-- Blade templates
-- SQLite for Laravel's local framework storage
+- PHP extensions: cURL, fileinfo, mbstring, OpenSSL, PDO,
+  PDO SQLite, SQLite3, and ZIP
 
-## Routes
+The current pages use Blade and inline CSS, so an npm build is not
+required to run them.
 
-| URL | Controller method |
-|---|---|
-| `/` | `PageController@index` |
-| `/about` | `PageController@about` |
-| `/customers` | `CustomerController@index` |
-| `/users` | `UserController@index` |
+## Installation — Windows PowerShell
 
-## Local Setup — Windows PowerShell
-
-Install PHP 8.4 and Composer. Enable PHP extensions including OpenSSL,
-mbstring, fileinfo, cURL, PDO SQLite, SQLite3, and ZIP.
-
-After cloning this repository, open a terminal inside its project folder.
-
-For a fresh clone, run:
+Clone the repository:
 
 ```powershell
+git clone https://github.com/jlventura594-bot/laravel-pos-tfa.git
+cd laravel-pos-tfa
 composer install
+```
+
+For a fresh clone, create the local environment configuration:
+
+```powershell
 Copy-Item .env.example .env
 php artisan key:generate
 ```
@@ -58,7 +73,7 @@ Ensure `.env` contains:
 DB_CONNECTION=sqlite
 ```
 
-Create the SQLite file if it does not already exist:
+Create the SQLite database file if missing:
 
 ```powershell
 if (!(Test-Path database/database.sqlite)) {
@@ -66,31 +81,67 @@ if (!(Test-Path database/database.sqlite)) {
 }
 ```
 
-Then run:
+Create the tables and populate sample data:
 
 ```powershell
 php artisan migrate --seed
+```
+
+Prepare the public storage link:
+
+```powershell
+php artisan storage:link
+```
+
+Start the development server:
+
+```powershell
 php artisan serve
 ```
 
-Open http://127.0.0.1:8000 in your browser.
+Open http://127.0.0.1:8000.
 
-## Database Files
+## Updating an Existing Local Copy
 
-Laravel's migrations and seeders are included in `database/`.
-Customer and user records are retrieved from the database using the
-Customer and User Eloquent models.
+Commit or otherwise preserve local changes before pulling.
 
-Local `.env`, SQLite database files, and dependency folders are excluded
-from version control.
+```powershell
+git pull origin main
+composer install
+php artisan migrate
+```
 
-## Manual Verification
+Keep the existing `.env` and application key.
 
-- All four pages load successfully.
-- Customers displays five records.
-- Users displays five records.
-- Navigation works between all pages.
+Run `php artisan db:seed` when sample data is needed. The seeder updates
+matching sample customers and creates sample users only when their
+usernames do not already exist.
+
+## Pages
+
+| URL | Purpose |
+|---|---|
+| `/` | Home |
+| `/about` | Project information |
+| `/customers` | Customer listing |
+| `/customers/create` | Create customer |
+| `/customers/{customer}/edit` | Edit customer |
+| `/users` | User listing |
+| `/users/create` | Create user |
+| `/users/{user}/edit` | Edit user |
+
+## Database
+
+- Customers: full name, email, and optional phone.
+- Users: unique username, full name, unique email, hashed password,
+  and nullable avatar path.
+- Migrations and seeders are included in the repository.
+- `.env`, local SQLite files, and dependency folders are excluded.
+
+The seeded users have randomly generated passwords and are sample
+records, not published login credentials.
 
 ## Deployment
 
-Hosting is pending. The live application URL will be added after deployment.
+A hosted submission link has not yet been confirmed.
+Deployment and the remaining TFA7 avatar features are pending.
