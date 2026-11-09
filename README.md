@@ -3,7 +3,7 @@
 A Laravel project for IT0049 Web System Technologies.
 
 **Developer:** John Laurence Ventura  
-**Current milestone:** TFA5 — Laravel POS Foundations
+**Current milestone:** TFA6 — From Arrays to Eloquent
 
 ## Features
 
@@ -14,9 +14,11 @@ A Laravel project for IT0049 Web System Technologies.
 - Navigation between all four pages.
 - Blade tables rendered using `@foreach`.
 
-Customer and user records are static arrays defined in their respective
-controllers. Authentication, database-backed records, and CRUD operations
-are not implemented in this milestone.
+Customer and user records are stored in a database and retrieved through
+Eloquent models. Migrations define the schema, and PosSeeder supplies
+five sample customers and five sample users.
+
+Authentication and CRUD operations are not implemented in this milestone.
 
 ## Technologies
 
@@ -67,7 +69,7 @@ if (!(Test-Path database/database.sqlite)) {
 Then run:
 
 ```powershell
-php artisan migrate
+php artisan migrate --seed
 php artisan serve
 ```
 
@@ -76,8 +78,8 @@ Open http://127.0.0.1:8000 in your browser.
 ## Database Files
 
 Laravel's migrations and seeders are included in `database/`.
-The displayed customer and user records come from controller arrays,
-not database tables.
+Customer and user records are retrieved from the database using the
+Customer and User Eloquent models.
 
 Local `.env`, SQLite database files, and dependency folders are excluded
 from version control.

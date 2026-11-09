@@ -17,7 +17,7 @@
 
     <h1>About Laravel POS</h1>
     <p>This application was developed for IT0049 Web System Technologies.</p>
-    <p>It demonstrates Laravel routing, controllers, Blade views, and static data.</p>
+    <p>It demonstrates Laravel routing, controllers, Blade views, migrations, seeders, and Eloquent database queries.</p>
     <p>Developed by John Laurence Ventura.</p>
 </body>
 

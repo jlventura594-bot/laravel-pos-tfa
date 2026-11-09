@@ -39,18 +39,20 @@
                 <th scope="col">ID</th>
                 <th scope="col">Full Name</th>
                 <th scope="col">Username</th>
-                <th scope="col">Role</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($users as $user)
+            @forelse ($users as $user)
                 <tr>
-                    <td>{{ $user['id'] }}</td>
-                    <td>{{ $user['full_name'] }}</td>
-                    <td>{{ $user['username'] }}</td>
-                    <td>{{ $user['role'] }}</td>
+                    <td>{{ $user->id }}</td>
+                    <td>{{ $user->full_name }}</td>
+                    <td>{{ $user->username }}</td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="3">No users found.</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 </body>
